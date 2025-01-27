@@ -1,48 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:muslim_app_hideri/model/surah_model.dart'; 
+import 'package:gap/gap.dart';
+import 'package:muslim_app_hideri/model/doa_model.dart';
 
 class DoaListWidget extends StatelessWidget {
-  final List<Surah> surahList; 
+  final List<DoaModel> doaList;
 
   const DoaListWidget({
     super.key,
-    required this.surahList,
+    required this.doaList,
   });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Filter/search functionality is commented out for now if needed later
-        // Padding(
-        //   padding: EdgeInsets.symmetric(horizontal: 20.0),
-        //   child: TextField(
-        //     controller: searchController,
-        //     onChanged: filterSurahList,
-        //     decoration: InputDecoration(
-        //       labelText: 'Search Surah',
-        //       prefixIcon: Icon(Icons.search),
-        //       border: OutlineInputBorder(
-        //         borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        //       ),
-        //     ),
-        //   ),
-        // ),
-        // SizedBox(height: 20),
-        ListView.builder(
-          shrinkWrap: true, 
-          physics: NeverScrollableScrollPhysics(), 
-          itemCount: surahList.length, 
+        ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: doaList.length,
           itemBuilder: (context, index) {
-            final surah = surahList[index]; 
-            int surahIndex = index + 1;
+            final doa = doaList[index];
+            int doaIndex = index + 1;
             return GestureDetector(
               onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  '/surah',
-                  arguments: surah.nama, 
-                );
+                _showDoaDetailDialog(context, doa);
               },
               child: Row(
                 children: [
@@ -58,8 +39,8 @@ class DoaListWidget extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        '$surahIndex',
-                        style: TextStyle(
+                        '$doaIndex',
+                        style: const TextStyle(
                           fontSize: 10,
                           color: Colors.grey,
                           fontWeight: FontWeight.bold,
@@ -67,26 +48,117 @@ class DoaListWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        surah.nama,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        doa.doa,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        surah.namaLatin,
-                        style: TextStyle(fontSize: 13, color: Colors.grey),
-                      ),
+                      const Gap(10),
                     ],
                   ),
                 ],
               ),
             );
           },
+          separatorBuilder: (context, index) => const Gap(16), // Jarak antar item
         ),
       ],
+    );
+  }
+
+  void _showDoaDetailDialog(BuildContext context, DoaModel doa) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Text(
+                      doa.doa,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  Gap(16),
+                  const Text(
+                    'Ayat:',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  Text(
+                    doa.ayat,
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                  Gap(16),
+                  const Text(
+                    'Latin:',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  Text(
+                    doa.latin,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Gap(16),
+                  const Text(
+                    'Artinya:',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  Text(
+                    doa.artinya,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Gap(24),
+                  Align(
+                    alignment: Alignment.center,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.teal,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: const Text('Tutup'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

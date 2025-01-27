@@ -6,6 +6,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'dart:math' as math;
 
 class CompassPage extends StatefulWidget {
+  const CompassPage({super.key});
+
   @override
   _CompassPageState createState() => _CompassPageState();
 }

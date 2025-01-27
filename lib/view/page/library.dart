@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:muslim_app_hideri/model/doa_model.dart';
 import 'package:muslim_app_hideri/service/api.dart';
 import 'package:muslim_app_hideri/view/widget/doa.dart';
 import 'package:muslim_app_hideri/view/widget/navbar.dart';
@@ -17,7 +18,8 @@ class _LibraryPageState extends State<LibraryPage> {
   bool isSurahSelected = true;
   List<Surah> filteredSurahList = [];
   List<Surah> allSurahList = [];
-  final TextEditingController _searchController = TextEditingController(); // Kontroler pencarian
+  final TextEditingController _searchController =
+      TextEditingController(); // Kontroler pencarian
 
   @override
   void initState() {
@@ -35,13 +37,15 @@ class _LibraryPageState extends State<LibraryPage> {
   void filterSurahList(String query) {
     if (query.isEmpty) {
       setState(() {
-        filteredSurahList = allSurahList; // Jika pencarian kosong, tampilkan semua surah
+        filteredSurahList =
+            allSurahList; // Jika pencarian kosong, tampilkan semua surah
       });
     } else {
       setState(() {
         filteredSurahList = allSurahList
-            .where((surah) =>
-                surah.namaLatin.toLowerCase().contains(query.toLowerCase())) // Filter berdasarkan nama surah
+            .where((surah) => surah.nama
+                .toLowerCase()
+                .contains(query.toLowerCase())) // Filter berdasarkan nama surah
             .toList();
       });
     }
@@ -67,11 +71,11 @@ class _LibraryPageState extends State<LibraryPage> {
             child: Column(
               children: [
                 Expanded(
-                  flex: 1, // Lebih besar untuk gambar (proporsi 7 bagian)
+                  flex: 3, // Lebih besar untuk gambar (proporsi 7 bagian)
                   child: SizedBox(),
                 ),
                 Expanded(
-                  flex: 6, // Lebih kecil untuk konten utama (proporsi 3 bagian)
+                  flex: 3, // Lebih kecil untuk konten utama (proporsi 3 bagian)
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(20.0),
@@ -87,15 +91,18 @@ class _LibraryPageState extends State<LibraryPage> {
                         children: [
                           // Search Bar untuk pencarian surah
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
                             child: TextField(
                               controller: _searchController,
-                              onChanged: filterSurahList, // Memanggil filter setiap kali teks diubah
+                              onChanged:
+                                  filterSurahList, // Memanggil filter setiap kali teks diubah
                               decoration: const InputDecoration(
                                 labelText: 'Search Surah',
                                 prefixIcon: Icon(Icons.search),
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
                                 ),
                               ),
                             ),
@@ -117,7 +124,8 @@ class _LibraryPageState extends State<LibraryPage> {
                                 GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      isSurahSelected = true; // Menampilkan Surah
+                                      isSurahSelected =
+                                          true; // Menampilkan Surah
                                     });
                                   },
                                   child: Text(
@@ -133,7 +141,8 @@ class _LibraryPageState extends State<LibraryPage> {
                                 GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      isSurahSelected = false; // Menampilkan Doa
+                                      isSurahSelected =
+                                          false; // Menampilkan Doa
                                     });
                                   },
                                   child: Text(
@@ -153,24 +162,34 @@ class _LibraryPageState extends State<LibraryPage> {
                           // Menampilkan konten yang sesuai berdasarkan tab yang dipilih
                           isSurahSelected
                               ? filteredSurahList.isNotEmpty
-                                  ? SurahListWidget(surahList: filteredSurahList) // Menampilkan Surah yang difilter
-                                  : Center(child: CircularProgressIndicator(),) // Tampil jika tidak ada hasil
-                              : FutureBuilder<SurahModel>(
-                                  // Menampilkan Doa (saat tab Doa dipilih)
-                                  future: fetchSurat(),
+                                  ? SurahListWidget(
+                                      surahList:
+                                          filteredSurahList) // Menampilkan Surah yang difilter
+                                  : Center(
+                                      child: Text(
+                                          'No Surah Found')) // Tampil jika tidak ada hasil
+                              : FutureBuilder<List<DoaModel>>(
+                                  future: fetchDoa(),
                                   builder: (context, snapshot) {
-                                    if (snapshot.connectionState == ConnectionState.waiting) {
-                                      return const Center(child: CircularProgressIndicator());
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const Center(
+                                          child: CircularProgressIndicator());
                                     } else if (snapshot.hasError) {
-                                      return Center(child: Text('Error: ${snapshot.error}'));
-                                    } else if (snapshot.hasData) {
+                                      return Center(
+                                          child:
+                                              Text('Error: ${snapshot.error}'));
+                                    } else if (snapshot.hasData &&
+                                        snapshot.data!.isNotEmpty) {
                                       return DoaListWidget(
-                                          surahList: snapshot.data!.data); // Menampilkan Doa
+                                          doaList: snapshot
+                                              .data!); // Menampilkan daftar Doa
                                     } else {
-                                      return const Center(child: Text('No data available'));
+                                      return const Center(
+                                          child: Text('No data available'));
                                     }
                                   },
-                                ),
+                                )
                         ],
                       ),
                     ),
