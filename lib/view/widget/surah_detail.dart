@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:muslim_app_hideri/main.dart';
 import 'package:muslim_app_hideri/model/surah_model_id.dart';
 import 'package:muslim_app_hideri/service/api.dart'; // Menyesuaikan dengan API service kamu
 import 'package:gap/gap.dart';
 
 class SurahDetailPage extends StatefulWidget {
-  const SurahDetailPage({super.key});
+  const SurahDetailPage(
+      {super.key, required Color primaryColor, required Color secondaryColor});
 
   @override
   _SurahDetailPageState createState() => _SurahDetailPageState();
@@ -25,8 +27,9 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: MainApp.primaryColor,
       appBar: AppBar(
-        title: Text('Detail Surat'),
+        title: Text('Detail Surat', style: TextStyle(color: Colors.white)),
       ),
       body: FutureBuilder<SurahModelById>(
         future: surahDetail,
@@ -47,32 +50,32 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
             padding: const EdgeInsets.all(16.0),
             child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     data.namaLatin,
                     style: TextStyle(
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                   Gap(10),
                   Text(
                     data.nama,
                     style: TextStyle(
-                      fontSize: 28.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                        fontSize: 28.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                   Gap(10),
                   Text(
                     "Arti: ${data.arti}",
-                    style: TextStyle(fontSize: 16.0),
+                    style: TextStyle(fontSize: 16.0, color: Colors.white),
                   ),
                   Gap(20),
                   Text(
                     "Deskripsi: ${data.deskripsi}",
-                    style: TextStyle(fontSize: 16.0),
+                    style: TextStyle(fontSize: 16.0, color: Colors.white),
                   ),
                   Gap(20),
                   ListView.builder(
@@ -85,33 +88,39 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
                               "Ayat ${ayat.nomorAyat}",
                               style: TextStyle(
-                                  fontSize: 18.0, fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.right,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                              textAlign: TextAlign.end,
                             ),
                             Text(
                               ayat.teksArab,
-                              style: TextStyle(fontSize: 22.0),
+                              style: TextStyle(
+                                  fontSize: 22.0, color: Colors.white),
                             ),
                             Text(
                               ayat.teksIndonesia,
-                              style: TextStyle(fontSize: 16.0),
+                              style: TextStyle(
+                                  fontSize: 16.0, color: Colors.white),
+                              textAlign: TextAlign.end,
                             ),
                             Gap(10),
                             Row(
                               children: [
                                 IconButton(
-                                  icon: Icon(Icons.play_arrow),
+                                  icon: Icon(Icons.play_arrow, color: Colors.white),
                                   onPressed: () {
                                     // Log saat audio diklik
                                     // Putar audio saat ditekan (implementasi lebih lanjut)
                                   },
                                 ),
-                                Text("Audio Ayat ${ayat.nomorAyat}"),
+                                Text("Audio Ayat ${ayat.nomorAyat}", style: TextStyle(color: Colors.white),),
                               ],
                             ),
                             Gap(20),
@@ -133,7 +142,10 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
                           arguments: data.nomor + 1,
                         );
                       },
-                      child: Text("Surat Selanjutnya"),
+                      child: Text(
+                        "Surat Selanjutnya",
+                        style: TextStyle(color: MainApp.primaryColor),
+                      ),
                     ),
                   // Menangani `suratSebelumnya`, perlu periksa jika bukan false atau null
                   if (data.suratSebelumnya != false)
@@ -146,7 +158,7 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
                           arguments: data.suratSebelumnya.nomor,
                         );
                       },
-                      child: Text("Surat Sebelumnya"),
+                      child: Text("Surat Sebelumnya", style: TextStyle(color: MainApp.primaryColor)),
                     ),
                 ],
               ),

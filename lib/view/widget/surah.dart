@@ -57,7 +57,7 @@ class SurahListWidget extends StatelessWidget {
                     children: [
                       Text(
                         surah.nama,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
                       ),
                       Text(
                         surah.namaLatin,

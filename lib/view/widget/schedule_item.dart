@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:muslim_app_hideri/main.dart';
 import 'package:muslim_app_hideri/model/jadwal_sholat_model.dart';
 
 class ScheduleItemWidget extends StatelessWidget {
@@ -21,37 +22,37 @@ class ScheduleItemWidget extends StatelessWidget {
         'name': 'Imsak',
         'time': jadwal.imsak,
         'icon': 'access_alarm',
-        'color': 'purple',
+        'color': 'white',
       }, // Only add Imsak if fasting is checked
       {
         'name': 'Subuh',
         'time': jadwal.subuh,
         'icon': 'nightlight_round',
-        'color': 'purple',
+        'color': 'white',
       },
       {
         'name': 'Dzuhur',
         'time': jadwal.dzuhur,
         'icon': 'sunny',
-        'color': 'blue',
+        'color': 'white',
       },
       {
         'name': 'Ashar',
         'time': jadwal.ashar,
         'icon': 'wb_sunny',
-        'color': 'orange',
+        'color': 'white',
       },
       {
         'name': 'Maghrib',
         'time': jadwal.maghrib,
         'icon': 'sunny_snowing',
-        'color': 'orange',
+        'color': 'white',
       },
       {
         'name': 'Isya',
         'time': jadwal.isya,
         'icon': 'nights_stay',
-        'color': 'purple',
+        'color': 'white',
       },
     ];
 
@@ -81,7 +82,7 @@ class ScheduleItemWidget extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: MainApp.primaryColor,
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: Row(
@@ -97,11 +98,11 @@ class ScheduleItemWidget extends StatelessWidget {
                         children: [
                           Text(
                             prayer['name']!,
-                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white),
                           ),
                           Text(
                             prayer['time']!,
-                            style: TextStyle(fontSize: 13, color: Colors.grey),
+                            style: TextStyle(fontSize: 13, color: Colors.white),
                           ),
                         ],
                       ),
@@ -130,6 +131,8 @@ class ScheduleItemWidget extends StatelessWidget {
         return Colors.red;
       case 'purple':
         return Colors.purple;
+      case 'white':
+        return Colors.white;
       default:
         return Colors.grey;
     }
@@ -160,7 +163,7 @@ class LinePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Color.fromARGB(255, 81, 152, 140) // Color of the line
+      ..color = MainApp.primaryColor // Color of the line
       ..strokeWidth = 2; // Stroke width for the line
 
     // Drawing the vertical line at the center of the widget

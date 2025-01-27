@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:muslim_app_hideri/main.dart';
 import 'package:muslim_app_hideri/model/jadwal_sholat_model.dart';
 import 'package:muslim_app_hideri/service/api.dart';
 import 'package:muslim_app_hideri/view/widget/highlight_card.dart';
@@ -17,13 +18,13 @@ class HomePage extends StatelessWidget {
     required this.lokasi,
     required this.tahun,
     required this.bulan,
-    required this.hari,
+    required this.hari, required Color primaryColor, required Color secondaryColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: MainApp.secondaryColor,
       body: FutureBuilder<JadwalSholat>(
         future: fetchJadwalSholat(lokasi, tahun, bulan, hari),
         builder: (context, snapshot) {
@@ -45,7 +46,7 @@ class HomePage extends StatelessWidget {
                     const Gap(20),
                     Text(
                       "Prayer Time",
-                      style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                     const Gap(10),
                     PrayerCardGrid(jadwalSholat: jadwalSholat),

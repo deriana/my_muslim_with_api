@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:muslim_app_hideri/main.dart';
 import 'package:muslim_app_hideri/model/jadwal_sholat_model.dart';
 import 'package:muslim_app_hideri/service/api.dart';
 import 'package:muslim_app_hideri/view/widget/calender.dart';
@@ -12,7 +13,7 @@ class SchedulePage extends StatefulWidget {
 
   const SchedulePage({
     super.key,
-    required this.lokasi,
+    required this.lokasi, required Color primaryColor, required Color secondaryColor,
   });
 
   @override
@@ -53,7 +54,7 @@ class _SchedulePageState extends State<SchedulePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 223, 246, 242),
+      backgroundColor: MainApp.secondaryColor,
       body: FutureBuilder<JadwalSholat>(
         future: jadwalSholat,
         builder: (context, snapshot) {
@@ -75,7 +76,7 @@ class _SchedulePageState extends State<SchedulePage> {
                   Container(
                     padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 81, 152, 140),
+                      color: MainApp.primaryColor,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20.0),
                         bottomRight: Radius.circular(20.0),
@@ -111,7 +112,7 @@ class _SchedulePageState extends State<SchedulePage> {
                             Gap(10),
                             Text("Schedule",
                                 style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold)),
+                                    fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)),
                             Gap(20),
                             ScheduleItemWidget(
                               jadwalSholat: jadwalSholat,

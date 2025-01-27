@@ -24,13 +24,14 @@ class PrayerOverview extends StatelessWidget {
           style: const TextStyle(
             fontSize: 15.0,
             fontWeight: FontWeight.bold,
+            color: Colors.white
           ),
         ),
         Text(
           hijriDateFormatted,
           style: const TextStyle(
             fontSize: 15.0,
-            color: Colors.green,
+            color: Colors.white
           ),
         ),
       ],

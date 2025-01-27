@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:muslim_app_hideri/main.dart';
 import 'package:muslim_app_hideri/model/doa_model.dart';
 
 class DoaListWidget extends StatelessWidget {
@@ -55,7 +56,8 @@ class DoaListWidget extends StatelessWidget {
                     children: [
                       Text(
                         doa.doa,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                       const Gap(10),
                     ],
@@ -64,7 +66,8 @@ class DoaListWidget extends StatelessWidget {
               ),
             );
           },
-          separatorBuilder: (context, index) => const Gap(16), // Jarak antar item
+          separatorBuilder: (context, index) =>
+              const Gap(16), // Jarak antar item
         ),
       ],
     );
@@ -75,6 +78,7 @@ class DoaListWidget extends StatelessWidget {
       context: context,
       builder: (context) {
         return Dialog(
+          backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -99,6 +103,7 @@ class DoaListWidget extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
+                      color: MainApp.primaryColor,
                     ),
                   ),
                   Text(
@@ -113,6 +118,7 @@ class DoaListWidget extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
+                      color: MainApp.primaryColor,
                     ),
                   ),
                   Text(
@@ -128,13 +134,14 @@ class DoaListWidget extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
+                      color: MainApp.primaryColor,
                     ),
                   ),
                   Text(
                     doa.artinya,
                     style: const TextStyle(
                       fontSize: 14,
-                      color: Colors.black,
+                      color: MainApp.primaryColor,
                     ),
                   ),
                   Gap(24),
@@ -145,12 +152,12 @@ class DoaListWidget extends StatelessWidget {
                         Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.teal,
+                        backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: const Text('Tutup'),
+                      child: const Text('Tutup', style: TextStyle(color: Colors.white),),
                     ),
                   ),
                 ],

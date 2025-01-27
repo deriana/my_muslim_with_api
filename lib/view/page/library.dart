@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:muslim_app_hideri/main.dart';
 import 'package:muslim_app_hideri/model/doa_model.dart';
 import 'package:muslim_app_hideri/service/api.dart';
 import 'package:muslim_app_hideri/view/widget/doa.dart';
@@ -8,7 +9,7 @@ import 'package:muslim_app_hideri/view/widget/surah.dart';
 import 'package:muslim_app_hideri/model/surah_model.dart';
 
 class LibraryPage extends StatefulWidget {
-  const LibraryPage({super.key});
+  const LibraryPage({super.key, required Color primaryColor, required Color secondaryColor});
 
   @override
   _LibraryPageState createState() => _LibraryPageState();
@@ -18,8 +19,9 @@ class _LibraryPageState extends State<LibraryPage> {
   bool isSurahSelected = true;
   List<Surah> filteredSurahList = [];
   List<Surah> allSurahList = [];
-  final TextEditingController _searchController =
-      TextEditingController(); // Kontroler pencarian
+  List<DoaModel> filteredDoaList = [];
+  List<DoaModel> allDoaList = [];
+  final TextEditingController _searchController = TextEditingController(); // Controller untuk pencarian
 
   @override
   void initState() {
@@ -31,21 +33,40 @@ class _LibraryPageState extends State<LibraryPage> {
         filteredSurahList = allSurahList; // Menampilkan data surah pada awalnya
       });
     });
+    // Memanggil API untuk mendapatkan data doa
+    fetchDoa().then((doaModelList) {
+      setState(() {
+        allDoaList = doaModelList; // Semua data doa tanpa filter
+        filteredDoaList = allDoaList; // Menampilkan data doa pada awalnya
+      });
+    });
   }
 
   // Fungsi untuk memfilter surah berdasarkan nama
   void filterSurahList(String query) {
     if (query.isEmpty) {
       setState(() {
-        filteredSurahList =
-            allSurahList; // Jika pencarian kosong, tampilkan semua surah
+        filteredSurahList = allSurahList; // Jika pencarian kosong, tampilkan semua surah
       });
     } else {
       setState(() {
         filteredSurahList = allSurahList
-            .where((surah) => surah.nama
-                .toLowerCase()
-                .contains(query.toLowerCase())) // Filter berdasarkan nama surah
+            .where((surah) => surah.nama.toLowerCase().contains(query.toLowerCase())) // Filter berdasarkan nama surah
+            .toList();
+      });
+    }
+  }
+
+  // Fungsi untuk memfilter doa berdasarkan nama doa
+  void filterDoaList(String query) {
+    if (query.isEmpty) {
+      setState(() {
+        filteredDoaList = allDoaList; // Jika pencarian kosong, tampilkan semua doa
+      });
+    } else {
+      setState(() {
+        filteredDoaList = allDoaList
+            .where((doa) => doa.doa.toLowerCase().contains(query.toLowerCase())) // Filter berdasarkan nama doa
             .toList();
       });
     }
@@ -59,7 +80,7 @@ class _LibraryPageState extends State<LibraryPage> {
           // Background Image
           Positioned.fill(
             child: Image.asset(
-              "../../assets/kabah.jpg", // Pastikan path gambar benar
+              "../../assets/bg-blue.jpg", // Pastikan path gambar benar
               width: double.infinity,
               height: double.infinity,
               fit: BoxFit.cover,
@@ -89,20 +110,23 @@ class _LibraryPageState extends State<LibraryPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Search Bar untuk pencarian surah
+                          // Search Bar untuk pencarian surah dan doa
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
                             child: TextField(
                               controller: _searchController,
-                              onChanged:
-                                  filterSurahList, // Memanggil filter setiap kali teks diubah
+                              onChanged: (query) {
+                                if (isSurahSelected) {
+                                  filterSurahList(query); // Memanggil filter surah
+                                } else {
+                                  filterDoaList(query); // Memanggil filter doa
+                                }
+                              }, // Memanggil filter setiap kali teks diubah
                               decoration: const InputDecoration(
-                                labelText: 'Search Surah',
+                                labelText: 'Search Surah or Doa',
                                 prefixIcon: Icon(Icons.search),
                                 border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
                                 ),
                               ),
                             ),
@@ -113,7 +137,7 @@ class _LibraryPageState extends State<LibraryPage> {
                             width: double.infinity,
                             padding: const EdgeInsets.all(10.0),
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 223, 246, 242),
+                              color: MainApp.primaryColor,
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(10.0),
                               ),
@@ -124,34 +148,28 @@ class _LibraryPageState extends State<LibraryPage> {
                                 GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      isSurahSelected =
-                                          true; // Menampilkan Surah
+                                      isSurahSelected = true; // Menampilkan Surah
                                     });
                                   },
                                   child: Text(
                                     "Surah",
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color: isSurahSelected
-                                          ? Colors.grey
-                                          : Colors.black,
+                                      color: isSurahSelected ? MainApp.secondaryColor : Colors.white,
                                     ),
                                   ),
                                 ),
                                 GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      isSurahSelected =
-                                          false; // Menampilkan Doa
+                                      isSurahSelected = false; // Menampilkan Doa
                                     });
                                   },
                                   child: Text(
                                     "Doa",
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color: !isSurahSelected
-                                          ? Colors.grey
-                                          : Colors.black,
+                                      color: !isSurahSelected ? MainApp.secondaryColor : Colors.white,
                                     ),
                                   ),
                                 ),
@@ -162,34 +180,11 @@ class _LibraryPageState extends State<LibraryPage> {
                           // Menampilkan konten yang sesuai berdasarkan tab yang dipilih
                           isSurahSelected
                               ? filteredSurahList.isNotEmpty
-                                  ? SurahListWidget(
-                                      surahList:
-                                          filteredSurahList) // Menampilkan Surah yang difilter
-                                  : Center(
-                                      child: Text(
-                                          'No Surah Found')) // Tampil jika tidak ada hasil
-                              : FutureBuilder<List<DoaModel>>(
-                                  future: fetchDoa(),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return const Center(
-                                          child: CircularProgressIndicator());
-                                    } else if (snapshot.hasError) {
-                                      return Center(
-                                          child:
-                                              Text('Error: ${snapshot.error}'));
-                                    } else if (snapshot.hasData &&
-                                        snapshot.data!.isNotEmpty) {
-                                      return DoaListWidget(
-                                          doaList: snapshot
-                                              .data!); // Menampilkan daftar Doa
-                                    } else {
-                                      return const Center(
-                                          child: Text('No data available'));
-                                    }
-                                  },
-                                )
+                                  ? SurahListWidget(surahList: filteredSurahList) // Menampilkan Surah yang difilter
+                                  : Center(child: CircularProgressIndicator()) // Tampil jika tidak ada hasil
+                              : filteredDoaList.isNotEmpty
+                                  ? DoaListWidget(doaList: filteredDoaList) // Menampilkan Doa yang difilter
+                                  : Center(child: CircularProgressIndicator()) // Tampil jika tidak ada hasil
                         ],
                       ),
                     ),

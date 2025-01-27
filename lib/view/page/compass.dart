@@ -6,7 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'dart:math' as math;
 
 class CompassPage extends StatefulWidget {
-  const CompassPage({super.key});
+  const CompassPage({super.key, required Color primaryColor, required Color secondaryColor});
 
   @override
   _CompassPageState createState() => _CompassPageState();
@@ -87,8 +87,6 @@ class _CompassPageState extends State<CompassPage> {
 
         double? direction = snapshot.data!.heading;
 
-        // if direction is null, then device does not support this sensor
-        // show error message
         if (direction == null) {
           return const Center(
             child: Text("Device does not have sensors !"),

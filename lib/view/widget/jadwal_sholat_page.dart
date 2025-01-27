@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:muslim_app_hideri/main.dart';
 import 'package:muslim_app_hideri/model/jadwal_sholat_model.dart';
 
 class PrayerCardGrid extends StatelessWidget {
@@ -15,37 +16,37 @@ class PrayerCardGrid extends StatelessWidget {
         'name': 'Imsak',
         'time': jadwal.imsak,
         'icon': 'access_alarm',
-        'color': 'purple',
+        'color': 'white',
       },
       {
         'name': 'Subuh',
         'time': jadwal.subuh,
         'icon': 'nightlight_round',
-        'color': 'purple',
+        'color': 'white',
       },
       {
         'name': 'Dzuhur',
         'time': jadwal.dzuhur,
         'icon': 'sunny',
-        'color': 'blue',
+        'color': 'white',
       },
       {
         'name': 'Ashar',
         'time': jadwal.ashar,
         'icon': 'wb_sunny',
-        'color': 'orange',
+        'color': 'white',
       },
       {
         'name': 'Maghrib',
         'time': jadwal.maghrib,
         'icon': 'sunny_snowing',
-        'color': 'orange',
+        'color': 'white',
       },
       {
         'name': 'Isya',
         'time': jadwal.isya,
         'icon': 'nights_stay',
-        'color': 'purple',
+        'color': 'white',
       },
     ];
 
@@ -107,18 +108,8 @@ class PrayerCardGrid extends StatelessWidget {
 
   Color getColorFromString(String colorString) {
     switch (colorString) {
-      case 'blueGrey':
-        return Colors.blueGrey;
-      case 'blue':
-        return Colors.blue;
-      case 'orange':
-        return Colors.orange;
-      case 'green':
-        return Colors.green;
-      case 'red':
-        return Colors.red;
-      case 'purple':
-        return Colors.purple;
+      case 'white':
+        return MainApp.primaryColor;
       default:
         return Colors.grey;
     }

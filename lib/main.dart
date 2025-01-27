@@ -12,9 +12,14 @@ void main() {
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
+  // Warna-warna utama yang akan digunakan di seluruh aplikasi
+  static const Color secondaryColor = Color(0xFF007f8e);
+  static const Color primaryColor = Color(0xFF00b3b8);
+
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
@@ -23,13 +28,26 @@ class MainApp extends StatelessWidget {
               tahun: now.year,
               bulan: now.month,
               hari: now.day,
+              primaryColor: primaryColor,
+              secondaryColor: secondaryColor,
             ),
         '/schedule': (context) => SchedulePage(
               lokasi: 1206,
+              primaryColor: primaryColor,
+              secondaryColor: secondaryColor,
             ),
-        '/library': (context) => LibraryPage(),
-        '/surah': (context) => SurahDetailPage(),
-        '/kiblat' : (context) => CompassPage(),
+        '/library': (context) => LibraryPage(
+              primaryColor: primaryColor,
+              secondaryColor: secondaryColor,
+            ),
+        '/surah': (context) => SurahDetailPage(
+              primaryColor: primaryColor,
+              secondaryColor: secondaryColor,
+            ),
+        '/kiblat': (context) => CompassPage(
+              primaryColor: primaryColor,
+              secondaryColor: secondaryColor,
+            ),
       },
     );
   }

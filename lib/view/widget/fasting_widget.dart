@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:muslim_app_hideri/main.dart';
 
 class FastingWidget extends StatefulWidget {
   final Function(bool) onChanged;
@@ -18,7 +19,7 @@ class _FastingWidgetState extends State<FastingWidget> {
       width: double.infinity,
       padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: MainApp.primaryColor,
         borderRadius: BorderRadius.all(Radius.circular(20.0)),
       ),
       child: Row(
@@ -37,6 +38,7 @@ class _FastingWidgetState extends State<FastingWidget> {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
             ],
@@ -56,13 +58,13 @@ class _FastingWidgetState extends State<FastingWidget> {
                   height: 30.0,
                   decoration: BoxDecoration(
                     color: isChecked
-                        ? Color.fromARGB(255, 81, 152, 140)
+                        ? MainApp.secondaryColor
                         : Colors.transparent,
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: isChecked
                           ? Colors.transparent
-                          : Color.fromARGB(255, 81, 152, 140),
+                          : MainApp.secondaryColor,
                       width: 1.0,
                     ),
                   ),

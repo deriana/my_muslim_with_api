@@ -22,7 +22,7 @@ class HighlightCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         image: const DecorationImage(
-          image: AssetImage('../../assets/bg.jpg'),
+          image: AssetImage('../../assets/bg-blue.jpg'),
           fit: BoxFit.cover,
         ),
       ),
