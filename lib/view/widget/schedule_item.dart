@@ -3,24 +3,26 @@ import 'package:muslim_app_hideri/model/jadwal_sholat_model.dart';
 
 class ScheduleItemWidget extends StatelessWidget {
   final JadwalSholat jadwalSholat;
+  final bool isFastingChecked;
 
   const ScheduleItemWidget({
     super.key,
     required this.jadwalSholat,
+    required this.isFastingChecked,
   });
 
   @override
   Widget build(BuildContext context) {
     final jadwal = jadwalSholat.data.jadwal;
 
-    // Map your data here
+    // Map your data here, modify prayerTimes based on fasting status
     final List<Map<String, String>> prayerTimes = [
-      {
+      if (isFastingChecked) {
         'name': 'Imsak',
         'time': jadwal.imsak,
         'icon': 'access_alarm',
         'color': 'purple',
-      },
+      }, // Only add Imsak if fasting is checked
       {
         'name': 'Subuh',
         'time': jadwal.subuh,
@@ -152,6 +154,7 @@ class ScheduleItemWidget extends StatelessWidget {
     }
   }
 }
+
 
 class LinePainter extends CustomPainter {
   @override

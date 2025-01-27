@@ -23,9 +23,6 @@ class MainApp extends StatelessWidget {
             ),
         '/schedule': (context) => SchedulePage(
               lokasi: 1206,
-              tahun: now.year,
-              bulan: now.month,
-              hari: now.day,
             ),
         // '/library': (context) => LibraryPage(),
         // '/kiblat': (context) => CompassPage(),

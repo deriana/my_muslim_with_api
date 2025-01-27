@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
   final int bulan;
   final int hari;
 
-  HomePage({
+  const HomePage({super.key, 
     required this.lokasi,
     required this.tahun,
     required this.bulan,
