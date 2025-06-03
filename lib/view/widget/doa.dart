@@ -57,7 +57,7 @@ class DoaListWidget extends StatelessWidget {
                       Text(
                         doa.doa,
                         style: const TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.white),
+                            fontWeight: FontWeight.bold, color: Colors.grey),
                       ),
                       const Gap(10),
                     ],
@@ -99,7 +99,7 @@ class DoaListWidget extends StatelessWidget {
                   ),
                   Gap(16),
                   const Text(
-                    'Ayat:',
+                    'Doa:',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -157,7 +157,10 @@ class DoaListWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: const Text('Tutup', style: TextStyle(color: Colors.white),),
+                      child: const Text(
+                        'Tutup',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                 ],

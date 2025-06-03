@@ -3,6 +3,7 @@ import 'package:muslim_app_hideri/view/page/compass.dart';
 import 'package:muslim_app_hideri/view/page/home_page.dart';
 import 'package:muslim_app_hideri/view/page/library.dart';
 import 'package:muslim_app_hideri/view/page/schedule.dart';
+import 'package:muslim_app_hideri/view/page/splashscreen.dart';
 import 'package:muslim_app_hideri/view/widget/surah_detail.dart';
 
 void main() {
@@ -12,7 +13,6 @@ void main() {
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
-  // Warna-warna utama yang akan digunakan di seluruh aplikasi
   static const Color secondaryColor = Color(0xFF007f8e);
   static const Color primaryColor = Color(0xFF00b3b8);
 
@@ -22,7 +22,12 @@ class MainApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      initialRoute: '/splash', // route awal splash screen
       routes: {
+        '/splash': (context) => SplashScreen(
+              primaryColor: primaryColor,
+              secondaryColor: secondaryColor,
+            ),
         '/': (context) => HomePage(
               lokasi: 1206,
               tahun: now.year,
